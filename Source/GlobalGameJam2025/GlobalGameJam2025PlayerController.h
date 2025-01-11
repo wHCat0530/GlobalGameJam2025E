@@ -42,6 +42,23 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* SetDestinationTouchAction;
 
+	/** Move Input Forward */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* SetDestinationMoveForward;
+
+	/** Move Input Backward */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* SetDestinationMoveBackward;
+
+	/** Move Input Right */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* SetDestinationMoveRight;
+
+	/** Move Input Left */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	UInputAction* SetDestinationMoveLift;
+	
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -57,6 +74,17 @@ protected:
 	void OnSetDestinationReleased();
 	void OnTouchTriggered();
 	void OnTouchReleased();
+
+	// Update New PlayerCharacterController
+	void MoveForward();
+	void MoveBackward();
+	void MoveLeft();
+	void MoveRight();
+
+	bool bMoveForward;
+	bool bMoveBackward;;
+	bool bMoveLeft;
+	bool bMoveRight;
 
 private:
 	FVector CachedDestination;

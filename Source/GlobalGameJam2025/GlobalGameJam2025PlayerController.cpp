@@ -20,6 +20,14 @@ AGlobalGameJam2025PlayerController::AGlobalGameJam2025PlayerController()
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
+
+
+	PrimaryActorTick.bCanEverTick = true;
+
+	bMoveForward = false;
+	bMoveBackward = false;
+	bMoveLeft = false;
+	bMoveRight = false;
 }
 
 void AGlobalGameJam2025PlayerController::BeginPlay()
@@ -122,4 +130,20 @@ void AGlobalGameJam2025PlayerController::OnTouchReleased()
 {
 	bIsTouch = false;
 	OnSetDestinationReleased();
+}
+
+void AGlobalGameJam2025PlayerController::MoveForward()
+{
+}
+
+void AGlobalGameJam2025PlayerController::MoveBackward()
+{
+}
+
+void AGlobalGameJam2025PlayerController::MoveLeft()
+{
+}
+
+void AGlobalGameJam2025PlayerController::MoveRight()
+{
 }
