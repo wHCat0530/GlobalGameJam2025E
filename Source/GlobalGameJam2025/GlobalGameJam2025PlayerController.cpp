@@ -36,6 +36,38 @@ void AGlobalGameJam2025PlayerController::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AGlobalGameJam2025PlayerController::Tick(float DeltaTime)
+{
+    FVector MovementDirection = FVector::ZeroVector;
+    
+    if (bMoveForward)
+    {
+        MovementDirection += FVector(1.f, 0.f, 0.f);
+    }
+    if (bMoveBackward)
+    {
+        MovementDirection += FVector(-1.f, 0.f, 0.f);
+    }
+    if (bMoveLeft)
+    {
+        MovementDirection += FVector(0.f, -1.f, 0.f);
+    }
+    if (bMoveRight)
+    {
+        MovementDirection += FVector(0.f, 1.f, 0.f);
+    }
+    
+    if (!MovementDirection.IsNearlyZero())
+    {
+        MovementDirection.Normalize();
+    	APawn* ControlledPawn = GetPawn();
+    	if (ControlledPawn != nullptr)
+    	{
+    		ControlledPawn->AddMovementInput(MovementDirection, 1.0, false);
+    	}
+    }
+}
+
 void AGlobalGameJam2025PlayerController::SetupInputComponent()
 {
 	// set up gameplay key bindings
@@ -61,6 +93,18 @@ void AGlobalGameJam2025PlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Triggered, this, &AGlobalGameJam2025PlayerController::OnTouchTriggered);
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Completed, this, &AGlobalGameJam2025PlayerController::OnTouchReleased);
 		EnhancedInputComponent->BindAction(SetDestinationTouchAction, ETriggerEvent::Canceled, this, &AGlobalGameJam2025PlayerController::OnTouchReleased);
+		
+		EnhancedInputComponent->BindAction(SetDestinationMoveForward, ETriggerEvent::Started, this, &AGlobalGameJam2025PlayerController::MoveForward);
+        EnhancedInputComponent->BindAction(SetDestinationMoveForward, ETriggerEvent::Completed, this, &AGlobalGameJam2025PlayerController::MoveForward);
+        
+        EnhancedInputComponent->BindAction(SetDestinationMoveBackward, ETriggerEvent::Started, this, &AGlobalGameJam2025PlayerController::MoveBackward);
+        EnhancedInputComponent->BindAction(SetDestinationMoveBackward, ETriggerEvent::Completed, this, &AGlobalGameJam2025PlayerController::MoveBackward);
+        
+        EnhancedInputComponent->BindAction(SetDestinationMoveLift, ETriggerEvent::Started, this, &AGlobalGameJam2025PlayerController::MoveLeft);
+        EnhancedInputComponent->BindAction(SetDestinationMoveLift, ETriggerEvent::Completed, this, &AGlobalGameJam2025PlayerController::MoveLeft);
+        
+        EnhancedInputComponent->BindAction(SetDestinationMoveRight, ETriggerEvent::Started, this, &AGlobalGameJam2025PlayerController::MoveRight);
+        EnhancedInputComponent->BindAction(SetDestinationMoveRight, ETriggerEvent::Completed, this, &AGlobalGameJam2025PlayerController::MoveRight);
 	}
 	else
 	{
@@ -134,16 +178,20 @@ void AGlobalGameJam2025PlayerController::OnTouchReleased()
 
 void AGlobalGameJam2025PlayerController::MoveForward()
 {
+    bMoveForward = !bMoveForward;   
 }
 
 void AGlobalGameJam2025PlayerController::MoveBackward()
 {
+    bMoveBackward = !bMoveBackward;
 }
 
 void AGlobalGameJam2025PlayerController::MoveLeft()
 {
+    bMoveLeft = !bMoveLeft;
 }
 
 void AGlobalGameJam2025PlayerController::MoveRight()
 {
+    bMoveRight = !bMoveRight;
 }
