@@ -7,7 +7,12 @@
 		{
 			"Name": "GlobalGameJamE",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"AIModule",
+				"CoreUObject",
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
